@@ -1,0 +1,92 @@
+﻿@page "/CreateMovie"
+
+@using MovieBlazorApp.Client.Model;
+@using Newtonsoft.Json;
+@using System.Net
+
+@inject NavigationManager NavigationManager
+@inject HttpClient HttpClient
+
+<h3>CreateMovie</h3>
+
+<div class="row">
+    <EditForm Model="@movieModel" OnValidSubmit="@InsertMovie">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <div class="form-group">
+            Title: <InputText id="Title" @bind-Value="movieModel.Title" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            Genre: <InputText id="Genre" @bind-Value="movieModel.Genre" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            Release year: <InputNumber id="ReleaseYear" @bind-Value="movieModel.ReleaseYear" class="form-control" />
+        </div>
+        
+        <div class="form-group">
+            Director: <InputSelect id="DirectorId" @bind-Value="movieModel.DirectorId" class="form-control">
+                @foreach (var director in allDirectors)
+                {
+                    <option value="@director.DirectorId">@director.FirstName @director.LastName</option>
+                }
+            </InputSelect>
+        </div>
+        
+        
+
+        <br />
+
+        <button type="submit" class="btn btn-success">Update</button>
+    </EditForm>
+    
+</div>
+
+<br />
+<br />
+<a href="/Movies">Back to List</a>
+
+@code {
+    //TODO: create list with directors
+    private MovieModel movieModel = new MovieModel();
+    private List<Director> allDirectors = new List<Director>();
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        allDirectors = await HttpClient.GetFromJsonAsync<List<Director>>("Director");
+
+    }
+
+
+
+    private async Task InsertMovie()
+    {
+        Movie movie = new Movie
+        {
+            Title = movieModel.Title,
+            Genre = movieModel.Genre,
+            ReleaseYear = movieModel.ReleaseYear,
+            DirectorId = movieModel.DirectorId
+
+        };
+
+        var response = await HttpClient.PostAsJsonAsync("Movie", movie);
+
+        if (response.IsSuccessStatusCode)
+        {
+            var responseText = await response.Content.ReadAsStringAsync();
+            Movie newMovie = JsonConvert.DeserializeObject<Movie>(responseText);
+            NavigationManager.NavigateTo($"EditMovie/{newMovie.MovieId}");
+        }
+        else
+        {
+            NavigationManager.NavigateTo("CreateMovie");
+        }
+
+
+    }
+
+}

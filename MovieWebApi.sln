@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30907.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieWebApi", "MovieWebApi\MovieWebApi.csproj", "{832FA4A1-D7DD-4091-9FEE-3F748BE8C32C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieBlazorApp.Client", "MovieBlazorApp.Client\MovieBlazorApp.Client.csproj", "{80D50748-9A0F-43BD-9123-6CE0EF17FCE1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{832FA4A1-D7DD-4091-9FEE-3F748BE8C32C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{832FA4A1-D7DD-4091-9FEE-3F748BE8C32C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{832FA4A1-D7DD-4091-9FEE-3F748BE8C32C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{832FA4A1-D7DD-4091-9FEE-3F748BE8C32C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{80D50748-9A0F-43BD-9123-6CE0EF17FCE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80D50748-9A0F-43BD-9123-6CE0EF17FCE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80D50748-9A0F-43BD-9123-6CE0EF17FCE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80D50748-9A0F-43BD-9123-6CE0EF17FCE1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D1395878-9A9F-4D0E-BD87-14B76269B444}
+	EndGlobalSection
+EndGlobal

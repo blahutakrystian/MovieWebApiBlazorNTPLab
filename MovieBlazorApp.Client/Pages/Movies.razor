@@ -1,0 +1,71 @@
+﻿@page "/Movies"
+
+@using MovieBlazorApp.Client.Model
+@using System.Net
+
+@inject HttpClient HttpClient;
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JsRuntime
+
+
+<h3>Movies</h3>
+
+@if (allMovies.Count == 0)
+{
+    <p><em>Loading..</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Movie</th>
+            <th>Director</th>
+            <th>Review</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var movie in allMovies)
+        {
+            <tr>
+                <td>@movie.Title</td>
+                <td>@allDirectors.FirstOrDefault(d => d.DirectorId == @movie.DirectorId)?.FirstName  @allDirectors.FirstOrDefault(d => d.DirectorId == @movie.DirectorId)?.LastName </td>
+                <td>@allReviews.FirstOrDefault(r => r.MovieId == @movie.MovieId)?.Comment</td>
+                <td><a href="/EditMovie/@movie.MovieId" class="btn btn-info">Edit</a></td>
+                <td><a @onclick="(() => DeleteMovie(movie.MovieId))" class="btn btn-danger"></a>Delete</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+
+    <a href="/CreateMovie">Create a Movie</a>
+}
+
+@code {
+
+    private List<Movie> allMovies = new List<Movie>();
+    private List<Director> allDirectors = new List<Director>();
+    private List<Review> allReviews = new List<Review>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        allMovies = await HttpClient.GetFromJsonAsync<List<Movie>>("Movie");
+        allDirectors = await HttpClient.GetFromJsonAsync<List<Director>>("Director");
+        allReviews = await HttpClient.GetFromJsonAsync<List<Review>>("Review");
+
+    }
+
+    public async Task DeleteMovie(int? id)
+    {
+        bool confirm = await JsRuntime.InvokeAsync<bool>("confirm", "Do you want to delete this movie?");
+        if (confirm)
+        {
+            var response = await HttpClient.DeleteAsync($"Movie/{id}");
+
+            NavigationManager.NavigateTo("/Movies", true);
+        }
+    }
+
+
+
+}
