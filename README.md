@@ -1,0 +1,2 @@
+# MovieWebApiBlazorNTPLab
+NTP assignment project
